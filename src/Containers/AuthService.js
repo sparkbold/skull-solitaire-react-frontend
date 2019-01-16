@@ -3,7 +3,8 @@ import decode from "jwt-decode";
 export default class AuthService {
   // Initializing important variables
   constructor(domain) {
-    this.domain = domain || "https://skull-solitaire-be.herokuapp.com/api/v1"; // API server domain
+    this.domain =
+      domain || "https://skull-solitaire-rails-api.herokuapp.com/api/v1"; // API server domain
   }
 
   login = (username, password) => {

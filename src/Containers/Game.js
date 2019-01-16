@@ -33,13 +33,13 @@ export default class Game extends React.Component {
       timer: 0,
       mode: "",
       gameEnded: false
-    }
+    };
 
     this.gameFinished = throttle(this.gameFinished, 1000, { trailing: false });
   }
 
   componentDidMount() {
-    fetch("https://skull-solitaire-be.herokuapp.com/api/v1/cards")
+    fetch("https://skull-solitaire-rails-api.herokuapp.com/api/v1/cards")
       .then(resp => resp.json())
       .then(data => {
         this.setState({
@@ -53,7 +53,7 @@ export default class Game extends React.Component {
   }
 
   initDecksState = () => {
-    const shuffleDecks = [...this.state.deck].sort(function () {
+    const shuffleDecks = [...this.state.deck].sort(function() {
       return 0.5 - Math.random();
     });
     const mode = this.state.mode;
@@ -126,7 +126,7 @@ export default class Game extends React.Component {
       let tableDecks = [...this.state.tableDecks];
       tableDecks[id].value = select.slice(1);
 
-      this.setState({ tableDecks, playerDeck }, () => { });
+      this.setState({ tableDecks, playerDeck }, () => {});
     } else if (
       parseInt(select[0].value) === parseInt(playerDeck[0].value - 1) ||
       parseInt(select[0].value - 1) === parseInt(playerDeck[0].value)
@@ -135,7 +135,7 @@ export default class Game extends React.Component {
       let tableDecks = [...this.state.tableDecks];
       tableDecks[id].value = select.slice(1);
 
-      this.setState({ tableDecks, playerDeck }, () => { });
+      this.setState({ tableDecks, playerDeck }, () => {});
     } else if (
       (select[0].value == 13 && playerDeck[0].value == 1) ||
       (select[0].value == 1 && playerDeck[0].value == 13)
@@ -144,7 +144,7 @@ export default class Game extends React.Component {
       let tableDecks = [...this.state.tableDecks];
       tableDecks[id].value = select.slice(1);
 
-      this.setState({ tableDecks, playerDeck }, () => { });
+      this.setState({ tableDecks, playerDeck }, () => {});
     }
   };
 
@@ -153,14 +153,14 @@ export default class Game extends React.Component {
     playerDeck.unshift(selectedDrawCard);
     const drawDeck = [...this.state.drawDeck].slice(1);
 
-    this.setState({ playerDeck, drawDeck }, () => { });
+    this.setState({ playerDeck, drawDeck }, () => {});
   };
 
   wildCardClick = selectedWildCard => {
     let playerDeck = [...this.state.playerDeck];
     playerDeck.unshift(selectedWildCard);
     const wildDeck = [...this.state.wildDeck].slice(1);
-    this.setState({ playerDeck, wildDeck }, () => { });
+    this.setState({ playerDeck, wildDeck }, () => {});
   };
 
   timer = () => {
@@ -196,12 +196,10 @@ export default class Game extends React.Component {
 
   gameLost = () => {
     let time = this.getGameTime();
-    console.log(time)
+    console.log(time);
     this.postGameStats("loss");
-    this.props.history.replace("/profile")
-    return (
-      null
-    );
+    this.props.history.replace("/profile");
+    return null;
   };
 
   getGameTime = () => {
@@ -214,10 +212,10 @@ export default class Game extends React.Component {
 
   postGameStats = result => {
     let time = this.getGameTime();
-    console.log(time)
-    let user = Auth.getProfile()
-    let mode = this.state.mode
-    fetch("https://skull-solitaire-be.herokuapp.com/api/v1/postgame", {
+    console.log(time);
+    let user = Auth.getProfile();
+    let mode = this.state.mode;
+    fetch("https://skull-solitaire-rails-api.herokuapp.com/api/v1/postgame", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -236,8 +234,8 @@ export default class Game extends React.Component {
     const gameDone =
       this.state.timer > 5
         ? !this.state.tableDecks.find(deck => {
-          return deck.value.length > 0;
-        })
+            return deck.value.length > 0;
+          })
         : false;
     if (this.state.mode === "") {
       return (
@@ -254,7 +252,7 @@ export default class Game extends React.Component {
       return this.gameLost();
     } else {
       return (
-        <div id='game'>
+        <div id="game">
           <div id="gameTimer">{this.timer()}</div>
           <TableDecks
             decks={this.state.tableDecks}
@@ -273,7 +271,9 @@ export default class Game extends React.Component {
           </div>
           <button
             id="endGame"
-            onClick={() => { this.setState({ gameEnded: true }) }}
+            onClick={() => {
+              this.setState({ gameEnded: true });
+            }}
           >
             I give up!
           </button>

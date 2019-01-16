@@ -37,7 +37,7 @@ export default class Login extends React.Component {
 
     username &&
       password &&
-      fetch("https://skull-solitaire-be.herokuapp.com/api/v1/users", {
+      fetch("https://skull-solitaire-rails-api.herokuapp.com/api/v1/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -61,7 +61,7 @@ export default class Login extends React.Component {
   render() {
     return (
       <div className="center">
-        <h1 id='title'>&#128128; Skull Solitaire</h1>
+        <h1 id="title">&#128128; Skull Solitaire</h1>
         <div className="form">
           <form onSubmit={this.handleSubmit}>
             <input
